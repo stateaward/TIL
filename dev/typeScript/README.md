@@ -18,7 +18,7 @@
 
 ## How to Use
 
-### Install
+### 📌 Install
 
 1. node.js 최신 버젼 다운로드
    1. 홈페이지에서 다운 받기
@@ -39,13 +39,13 @@
    ```
    {
     "compilerOptions" : {
-        "target": "es5",
-        "module": "commonjs",
+        "target": "es5",           // JS 몇 버젼으로?
+        "module": "commonjs",      // 언제적 JS 문법으로?
     }
    }
    ```
 
-### Usage
+### 📌 Usage
 
 브라우저에선 `.ts` 파일을 못읽음.  
 따라서, VSCode 명령어로 `tsc -w` 을 입력하면 자동으로 `.js` 파일로 컴파일됨(실시간)
