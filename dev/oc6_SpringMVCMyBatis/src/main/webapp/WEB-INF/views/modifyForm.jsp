@@ -1,0 +1,45 @@
+<%@ page contentType="text/html;charset=utf-8"%>
+
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+</HEAD>
+<BODY>
+	<center>
+		<form method='post' action='modify.bod'>
+			<table>
+				<tr>
+					<td><h1>수정하기</h1></td>
+				</tr>
+				<tr>
+					<td>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 <input type=input
+						name='title' size=42 value='${b.title}'></td>
+				</tr>
+				<tr>
+					<td colspan=2><textarea rows=10 cols=50 name='content'>${b.content}</textarea></td>
+				</tr>
+				<tr>
+					<td><center>
+							<input type=submit value=전송> <input type=reset value=취소>
+						</center></td>
+					<td><input type="hidden" name="num" value="${b.num}"></td>
+				</tr>
+			</table>
+		</form>
+		<p>
+			<a href="list.bod">전체화면</a>&nbsp;&nbsp;&nbsp;
+	</center>
+
+</BODY>
+</HTML>
+
+
+
+
+
+
+
+
+
+
+

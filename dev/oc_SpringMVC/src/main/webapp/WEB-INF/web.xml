@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>												<!-- class명이 너무 길어 별칭으로 (appServlet) -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>	<!-- 프론트 컨트롤러(DispatcherServlet) -->
+		<init-param>																		<!-- 만들어진 디스패쳐에 파라미터 넘기겠다 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>		<!-- servlet-context.xml를 읽어 만들어진 애들은 DispatcherServlet 전용임. -->
+			<!-- 스프링 컨테이너가 이 파일을 읽어서, 필요한 객체를 생성해줌
+				 Legacy Project에선, src/main/resources의 파일을 읽는 것 처럼
+			 -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.bod</url-pattern>			<!-- 확상자를 .bod로 해야만 위의 서블릿이 일을 함 -->
+	</servlet-mapping>
+	
+	- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	
+	<!-- 예시 -->
+	<servlet>	<!-- 이 범위 안에 생성하고 선언된 건 오로지 얘 전용 -->
+		<servlet-name>HelloServlet</servlet-name>											
+		<servlet-class>com.test.HelloServlet</servlet-class>	
+		<init-param>																		
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/hello-servlet-context.xml</param-value>			<!-- hello-servlet-context.xml, 여기에 얘만 사용 가능한 전용 객체 생성 가능 -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>	
+
+	
+	<!-- 한글 필터 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.CharacterEncodingFilter
+		</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	<!--  필터는 DispatcherServlet 가기전에 필터링하고 인터셉터는 컨트롤러 요청을 스틸해서 조건  -->
+
+</web-app>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+<!-- spring 설정파일 -->
+<import resource="dbConfig.xml"/>
+
+<!-- "저 패키지 검사해서 annotation 되어 있는 애들 생성해주세요~" -->
+<context:component-scan base-package="com.mvc.dao"/>
+<context:component-scan base-package="com.mvc.service"/>
+
+<!-- mybatis가 db작업할 객체 생성(SqlSession)  -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="ds"/>
+	<property name="typeAliasesPackage" value="com.mvc.vo"/>
+</bean>
+
+<!-- MapperScannerConfigurer:mapper file을 해당 패키지에서 찾아서 proxy 객체를 생성한 후 DAO에 주입시킴 -->
+<bean id="config" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<property name="basePackage" value="com.mvc.mapper"/>
+</bean>
+
+
+
+</beans>
+
+
+
+
+
+
+
+

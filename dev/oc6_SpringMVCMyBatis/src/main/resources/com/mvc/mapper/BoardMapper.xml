@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- xml mapper와 짝이 되서 돌아갈 자바명, 패키지명을 적어주면 된다. -->
+<mapper namespace="com.mvc.mapper.BoardMapper">
+
+	<!-- myBatis가 이용하는 query문장이 들어 있는 파일 java Mapper에 의해 이용됨. java Mapper - 
+		xml Mapper - myBatis java Mapper안에 있는 메소드 이름과 xml Mapper 안의 query id가 일치해야 
+		함. -->
+
+	<!-- 
+		리절트 맵 정의. primary key 컬럼은 id 태그로 표시해줌
+		select 한 후의 컬럼명과 vo안의 일치하지 않아서, 둘간의 관계를 나타낼 때 사용
+	 -->
+	<resultMap id="JoinResult" type="Board">		<!-- 타입은 vo -->
+		<result column="empid" property="num" />	<!-- 임시로 vo의 변수들에 할당 -->
+		<result column="fname" property="pass" />
+		<result column="deptid" property="name" />
+		<result column="deptname" property="wdate" />
+	</resultMap>
+
+	<select id="selectAll" resultType="com.mvc.vo.Board">
+		select * from board order by num desc
+	</select>
+	
+	<select id="join" resultMap="JoinResult">
+		select e.empid empid, e.fname fname, d.deptid deptid, d.deptname deptname
+		from emp e, dept d
+		where e.deptid = d.deptid
+	</select>
+	
+	<!-- resultType= "Board" 타입 객체를 찾음 (ApplicationConfig.xml에 설정되어있음) -->
+	<select id="selectOne" resultType="Board" parameterType="String">
+		select * from board where num = #{num}
+	</select>
+	
+	<insert id="insert" parameterType="Board">
+		insert into board values(null,#{pass},#{name},sysdate(),#{title},#{content},0)		
+	</insert>
+	
+	<delete id="delete" parameterType="Board">
+		delete from board where num = #{num}
+	</delete>
+	
+	<update id="countUp" parameterType="String">
+		update board set count = count + 1 where num = #{num}
+	</update>
+
+	<update id="modify" parameterType="java.util.Map">	<!-- java.util.Map -->
+		update board
+		set title = #{title}, content = #{content}
+		where num = #{num}
+	</update>
+
+
+</mapper>
+
+
+
+
