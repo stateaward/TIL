@@ -11,7 +11,7 @@ const EventPractice2 = () => {
   // const [message, setMessage] = useState('기본메세지');
 
   // const onChangeUsername = e => setUsername(e.target.value);
-  // const onChageMessage = e => setMessage(e.target.value);
+  // const onChangeMessage = e => setMessage(e.target.value);
   // const onClick = ()=>{
   //   alert(username + ' : ' + message);
   //   setUsername('');

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 
 // 로직(계산용)
 const getAverage = numbers => {
@@ -11,11 +11,12 @@ const getAverage = numbers => {
 const Average = () => {
     const [list, setList] = useState([]);
     const [number, setNumber] = useState('');
+    const inputEl = useRef(null);
 
-    // 컴포넌트가 리랜더링 될 때마다, onChane/onInsert 함수가 새로 만들어짐
+    // 컴포넌트가 리랜더링 될 때마다, onChange/onInsert 함수가 새로 만들어짐
     // useCallback(함수, [검사값]);
-    const onChane = useCallback(e => {
-        console.log('onChane!')
+    const onChange = useCallback(e => {
+        console.log('onChange!')
         setNumber(e.target.value);
     }, []); // 빈 검사값 배열 : 처음 랜더링 될 때만 -> 새로운 함수 사용!
 
@@ -24,6 +25,7 @@ const Average = () => {
         const nextList = list.concat(parseInt(number));
         setList(nextList);
         setNumber('');
+        inputEl.current.focus(); // ref를 통해, 엘리먼트를 가르킴
     }, [number, list]); // number || list 값이 변했을 때만 -> 새로운 함수 사용!
 
     // 검사값 배열에 있는 list가 변경될 때만, 함수를 실행한다
@@ -31,7 +33,7 @@ const Average = () => {
 
     return (
         <div>
-            <input value={number} onChange={onChane} />
+            <input value={number} onChange={onChange} ref={inputEl} />
             <button onClick={onInsert}>등록</button>
             <ul>
                 {list.map((value, index) => (
